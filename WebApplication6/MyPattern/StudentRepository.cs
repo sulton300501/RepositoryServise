@@ -52,22 +52,70 @@ namespace WebApplication6.MyPattern
 
         public bool DeleteStudent(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "DELETE FROM student WHERE id = @Id";
+                    connection.Execute(query, new { Id = id });
+                }
+
+                return true; 
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<Student> GetAllStudents()
         {
-            throw new NotImplementedException();
+            using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "SELECT * FROM student";
+                return connection.Query<Student>(query);
+            }
         }
 
         public Student GetByIdStudent(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "SELECT * FROM student WHERE id = @Id";
+                return connection.QueryFirstOrDefault<Student>(query, new { Id = id });
+            }
         }
 
         public Student UpdateStudent(int id, StudentDTO studentdto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "UPDATE student SET full_name = @full_name, age = @age, course_id = @course_id, phone = @phone, parent_phone = @parent_phone, shot_number = @shot_number WHERE id = @Id";
+
+                    var parameters = new
+                    {
+                        Id = id,
+                        full_name = studentdto.full_name,
+                        age = studentdto.age,
+                        course_id = studentdto.course_id,
+                        phone = studentdto.phone,
+                        parent_phone = studentdto.parent_phone,
+                        shot_number = studentdto.shot_number,
+                    };
+
+                    connection.Execute(query, parameters);
+
+                    // Return the updated student
+                    return GetByIdStudent(id);
+                }
+            }
+            catch (Exception)
+            {
+                // Handle update failure
+                return null;
+            }
         }
     }
 }
