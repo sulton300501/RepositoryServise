@@ -2,6 +2,7 @@
 using WebApplication6.MyPattern;
 
 
+
 namespace WebApplication6
 {
     public class Program
