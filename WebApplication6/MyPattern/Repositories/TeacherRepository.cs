@@ -23,7 +23,7 @@ namespace WebApplication6.MyPattern.Repositories
             {
                 using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    string query = "";
+                    string query = "insert into teachers(full_name,age,salary,phone,groups_count,experience) values(@full_name,@age,@salary,@phone,@groups_count,@experience)";
 
                     var parameters = new TeachedDTO
                     {
@@ -37,7 +37,7 @@ namespace WebApplication6.MyPattern.Repositories
                        
                     };
 
-                    connection.ExecuteAsync(query, parameters);
+                    connection.Execute(query, parameters);
 
                     // Return the updated student
                   

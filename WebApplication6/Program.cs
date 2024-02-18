@@ -1,5 +1,7 @@
 
 using WebApplication6.MyPattern;
+using WebApplication6.MyPattern.IRepositories;
+using WebApplication6.MyPattern.Repositories;
 
 
 
@@ -19,6 +21,8 @@ namespace WebApplication6
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ITeacherRepository,TeacherRepository>();
+
 
             var app = builder.Build();
 
