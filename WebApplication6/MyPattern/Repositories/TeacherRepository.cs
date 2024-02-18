@@ -60,7 +60,21 @@ namespace WebApplication6.MyPattern.Repositories
 
         public IEnumerable<Teacher> GetAllTeachers()
         {
-            throw new NotImplementedException();
+          
+                using (var connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "select * from teachers";
+
+
+                    var result = connection.Query<Teacher>(query);
+                   
+                    return result;
+ 
+
+                }
+              
+            
+         
         }
 
         public Teacher UpdateTeacher(int id, TeachedDTO teacherdto)

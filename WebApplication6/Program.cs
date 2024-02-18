@@ -2,6 +2,7 @@
 using WebApplication6.MyPattern;
 using WebApplication6.MyPattern.IRepositories;
 using WebApplication6.MyPattern.Repositories;
+using WebApplication6.Services.TeacherServices;
 
 
 
@@ -22,7 +23,7 @@ namespace WebApplication6
 
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<ITeacherRepository,TeacherRepository>();
-
+            builder.Services.AddScoped<ITeacherService, TeacherService>();
 
             var app = builder.Build();
 
